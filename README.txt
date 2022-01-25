@@ -1,3 +1,6 @@
+DOC FILE IN MASTER
+
+
 THIS IS HTML ASSIGNMENT!
 It is about rainbow.
 Rainbow has seven colour
@@ -18,4 +21,7 @@ BLUE
 INDIGO
 VIOLET
 >>>>>>> js-assignments
+
+
+
 
