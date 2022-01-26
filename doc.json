@@ -1,0 +1,722 @@
+Basic Assignments
+use mongo_practice
+switched to db mongo_practice
+Insert the following documents into a movies collection.
+title : Fight Club
+writer : Chuck Palahniuko
+year : 1999
+actors : [
+ Brad Pitt
+ Edward Norton
+]
+
+db.movies.insert({title:"Fight Club", writer: "Chuck Palahniuk", year: "1999", actors:["Brad Pitt", "Edward Norton"]})
+
+
+title : Pulp Fiction
+writer : Quentin Tarantino
+year : 1994
+actors : [
+ John Travolta
+ Uma Thurman
+]
+
+db.movies.insert({title:"Inglorious Basterds", writer: "Quentin Tatantino", year: "2009", actors:["Brad Pitt", "Diane Kruger","Eli Roth"]})
+
+title : Inglorious Basterds
+writer : Quentin Tarantino
+year : 2009
+actors : [
+ Brad Pitt
+ Diane Kruger
+ Eli Roth
+]
+
+db.movies.insert({title:"The Hobbit: An Unexpected Journey", writer: "J.R.R. Tolkein", year: "2012", actors:["Brad Pitt", "Diane Kruger","Eli Roth"]})
+
+
+
+
+title : The Hobbit: An Unexpected Journey
+writer : J.R.R. Tolkein
+year : 2012
+franchise : The Hobbit
+
+db.movies.insert({title:"The Hobbit: An Unexpected Journey", writer: "J.R.R. Tolkein", year: "2012", franchise:"The Hobbit"})
+
+
+title : The Hobbit: The Desolation of Smaug
+writer : J.R.R. Tolkein
+year : 2013
+franchise : The Hobbit
+
+db.movies.insert({title:"The Hobbit: The Desolation of Smaug", writer: "J.R.R. Tolkein", year: "2013", franchise:"The Hobbit"})
+
+title : The Hobbit: The Battle of the Five Armies
+writer : J.R.R. Tolkein
+year : 2012
+franchise : The Hobbit
+synopsis : Bilbo and Company are forced to engage in a war against an array of
+combatants and keep the Lonely Mountain from falling into the hands of a rising
+darkness.
+db.movies.insert({title:"The Hobbit: The Battle of the Five Armies", writer: "J.R.R. Tolkein", year: "2012", franchise:"The Hobbit", synopsis:"Bilbo and Company are forced to engage in a war against an array of Combotants and keep the Lonely Mountain from falling into hands of a rising darkness."})
+
+title : Pee Wee Herman's Big Adventure
+db.movies.insert({title:"Pee Wee Herman's Big Adventures"})
+title : Avatar
+db.movies.insert({title:"Avatar"})
+
+
+Query / Find Documents
+query the movies collection to
+1.	get all documents
+db.movies.find()
+OR
+db.movies.find({}).pretty()
+
+2.	get all documents with writer set to "Quentin Tarantino"
+db.movies.find({writer:"Quentin Tatantino"})
+
+3.	get all documents where actors include "Brad Pitt"
+db.movies.find({actors:"Brad Pitt"})
+ 
+4.	get all documents with franchise set to "The Hobbit"
+db.movies.find({franchise:"The Hobbit"})
+ 
+5.	get all movies released in the 90s
+db.movies.find({year:{$gt:"1990",$lt:"2000"}})
+
+6.	get all movies released before the year 2000 or after 2010
+db.movies.find({$or:[{year:{$gt:"2010"}},{year:{$lt:"2000"}}]})
+
+Update Documents
+1. add a synopsis to "The Hobbit: An Unexpected Journey" : "A reluctant hobbit, 
+Bilbo Baggins, sets out to the Lonely Mountain with a spirited group of 
+dwarves to reclaim their mountain home - and the gold within it - from the 
+dragon Smaug."
+
+db.movies.update({_id:ObjectId("61ed5d3939039fe3715dca2d")},{$set:{synopsis:"A reluctant hobbit, Bilbo Baggins, sets out to the Lonely Mountain with a spirited group of dwarves to reclaim their mountain home - and the gold within it - from the dragon smaug."}})
+ 
+2. add a synopsis to "The Hobbit: The Desolation of Smaug" : "The dwarves, 
+along with Bilbo Baggins and Gandalf the Grey, continue their quest to reclaim 
+Erebor, their homeland, from Smaug. Bilbo Baggins is in possession of a 
+mysterious and magical ring."
+
+db.movies.update({_id:ObjectId("61ed5dbe39039fe3715dca2e")},{$set:{synopsis:"The dwarves along the Bilbo Baggins and Gandalf the Grey,continue their quest to reclaim Erebor,their homeland,from smaug.Bilbo Baggins is in possession of a mysterious and magical ring."}})
+
+3. add an actor named "Samuel L. Jackson" to the movie "Pulp Fiction"
+db.movies.update({_id:ObjectId("61ed5b9d39039fe3715dca2a")},{$push:{actors:"Samuel L. Jackson"}})
+$push:appends specified value to an array
+
+Text Search
+
+1.	find all movies that have a synopsis that contains the word "Bilbo"
+db.movies.find({synopsis:{$regex:"Bilbo"}})
+
+$regex :regular expression: to match patterns with sequences of characters.
+ 
+2.	find all movies that have a synopsis that contains the word"Gandalf"
+db.movies.find({synopsis:{$regex:"Gandalf"}})
+ 3. find all movies that have a synopsis that contains the word "Bilbo" and not the word "Gandalf"
+db.movies.find({$and:[{synopsis:{$regex:"Bilbo"}},{synopsis:{$not:/Gandalf/}}]})
+ 4. find all movies that have a synopsis that contains the word "dwarves" or "hobbit"
+db.movies.find({$or:[{synopsis:{$regex:"dwarves"}},{synopsis:{$regex:"hobbit"}}]})
+ 
+
+5. find all movies that have a synopsis that contains the word "gold" and "dragon"
+db.movies.find({$and:[{synopsis:{$regex:"gold"}},{synopsis:{$regex:"dragon"}}]})
+
+
+Delete Documents
+
+1.delete the movie "Pee Wee Herman's Big Adventure"
+db.movies.remove({_id:ObjectId("61ed5f0f39039fe3715dca30")})
+
+ 
+2.delete the movie "Avatar" db.movies.remove({_id:ObjectId("61ed5f1f39039fe3715dca31")})
+
+ 
+Relationships
+Insert the following documents into a users collection
+username : GoodGuyGreg
+first_name : "Good Guy"
+last_name : "Greg"
+
+db.createCollection("users");
+db.users.insert({_id:1,username:"GoodGuyGreg",first_name:"Good Guy",last_name:"Greg"})
+
+ 
+
+ 
+
+
+username : ScumbagSteve
+full_name :
+ first : "Scumbag"
+ last : "Steve"
+
+db.users.insert({_id:2,username:"ScumbagSteve",fullname:{first:"Scumbag",last:"Steve"}})
+
+ 
+
+ 
+
+
+Insert the following documents into a posts collection
+db.createCollection("posts");
+username : GoodGuyGreg
+title : Passes out at party
+body : Wakes up early and cleans house
+
+db.posts.insert({_id:1,username:"GoodGuyGreg",title:"Passes out at party",body:" Wakes up early and cleans house "})
+ 
+
+username : GoodGuyGreg
+title : Steals your identity
+body : Raises your credit score
+
+db.posts.insert({_id:2,username:"GoodGuyGreg",title:"Steals your identity",body:"Raises your credit score"})
+ 
+
+
+username : GoodGuyGreg
+title : Reports a bug in your code
+body : Sends you a Pull Request
+
+db.posts.insert({_id:3,username:"GoodGuyGreg",title:"Rports abug in your code",body:"Sends you a Pull Request"})
+ 
+
+username : ScumbagSteve
+title : Borrows something
+body : Sells it
+
+db.posts.insert({_id:4,username:"ScumbagSteve",title:"Borrows something",body:"Sells it"})
+ 
+
+username : ScumbagSteve
+title : Borrows everything
+body : The end
+
+db.posts.insert({_id:5,username:"ScumbagSteve",title:"Borrows something",body:"The end"})
+ 
+
+
+
+
+username : ScumbagSteve
+title : Forks your repo on github
+body : Sets to private
+
+db.posts.insert({_id:6,username:"ScumbagSteve",title:"Forks your repo in github",body:"Sets to private"})
+ 
+
+
+ 
+
+
+
+
+
+	
+
+
+
+Insert the following documents into a comments collection
+
+db.createCollection("comments");
+
+username : GoodGuyGreg
+comment : Hope you got a good deal!
+post : [post_obj_id]
+where [post_obj_id] is the ObjectId of the posts document: "Borrows something"
+
+db.comments.insert({username:"GoodGuyGreg",comment:"Hope you got a good deal!",posts:4})
+where post:4-4 is id is given by me to post document
+ 
+
+username : GoodGuyGreg
+comment : What's mine is yours!
+post : [post_obj_id]
+where [post_obj_id] is the ObjectId of the posts document: "Borrows everything"
+
+db.comments.insert({username:"GoodGuyGreg",comment:"What's mine is yours!",posts:5})
+where post:5-5 id is given by me to post document
+ 
+
+
+username : GoodGuyGreg
+comment : Don't violate the licensing agreement!
+post : [post_obj_id]
+where [post_obj_id] is the ObjectId of the posts document: "Forks your repo on 
+github
+
+db.comments.insert({username:"GoodGuyGreg",comment:"Don't violate the licensing agreement!",posts:6})
+where post:6-6  id is given by me to post document
+ 
+
+
+
+username : ScumbagSteve
+comment : It still isn't clean
+post : [post_obj_id]
+where [post_obj_id] is the ObjectId of the posts document: "Passes out at party"
+
+db.comments.insert({username:"ScumbagSteve",comment:"It still isn't clean",posts:1})
+where post:1-1 id is given by me to post document
+ 
+
+
+
+username : ScumbagSteve
+comment : Denied your PR cause I found a hack
+post : [post_obj_id]
+where [post_obj_id] is the ObjectId of the posts document: "Reports a bug in your 
+code"
+db.comments.insert({username:"ScumbagSteve",comment:"Denied your PR cause I found a hack",posts:2})
+where post:2-2id is given by me to post document
+ 
+
+
+
+
+Querying related collections
+1.	find all users
+db.users.find().pretty()
+
+ 
+
+2.	find all posts
+db.posts.find().pretty()
+
+ 
+
+3.	find all posts that was authored by "GoodGuyGreg"
+db.posts.find({username:"GoodGuyGreg"})
+
+ 
+4.	find all posts that was authored by "ScumbagSteve"
+db.posts.find({username:"ScumbagSteve"})
+
+ 
+
+5.	find all comments
+
+db.comments.find().pretty()
+ 
+
+6.	find all comments that was authored by "GoodGuyGreg"
+
+db.comments.find({username:"GoodGuyGreg"})
+ 
+
+7.	find all comments that was authored by "ScumbagSteve"
+
+db.comments.find({username:"ScumbagSteve"})
+ 
+
+
+8.	find all comments belonging to the post "Reports a bug in your code"  db.comments.find({posts:db.posts.findOne({title:"Rports abug in your code"})._id})
+
+ 
+
+MongoDB -Aggregation Exercises
+
+Atlanta Population
+1. use db.zipcodes.find() to filter results to only the results where city is ATLANTA 
+and state is GA.
+db.zipcodes.find({city:"ATLANTA",state:"GA"})
+
+ 
+
+2.use db.zipcodes.aggregate with $match to do the same as above.
+db.zipcodes.aggregate([{$match:{city:"ATLANTA",state:"GA"}}])
+
+ 
+
+3.	use $group to count the number of zip codes in Atlanta.
+db.zipcodes.aggregate([{$match:{city:'ATLANTA'}},{$group:{_id:"city",count:{$sum:1}}}]);
+
+ 
+
+4.	use $group to find the total population in Atlanta.
+db.zipcodes.aggregate([{$match:{city:'ATLANTA'}},{$group:{_id:"city",total:{$sum:"$pop"}}}]);
+
+
+Populations By State
+1.	use aggregate to calculate the total population for each state
+db.zipcodes.aggregate([{$group:{_id:"$state",total:{$sum:"$pop"}}},{$match:{total:{$gte:10*1000*1000}}}]);
+ 
+
+2.	sort the results by population, highest first
+
+db.zipcodes.aggregate([{$group:{_id:"$state",total:{$sum:"$pop"}}},{$match:{total:{$gte:10*1000*1000}}},{$sort:{"total":-1}}]);
+
+ 
+3. limit the results to just the first 3 results. What are the top 3 states in 
+population?
+
+db.zipcodes.aggregate([{$group:{_id:"$state",total:{$sum:"$pop"}}},{$match:{total:{$gte:10*1000*1000}}},{$sort:{"total":-1}},{$limit:3}]);
+ 
+
+Populations by City
+
+1. use aggregate to calculate the total population for each city (you have to use 
+city/state combination). You can use a combination for the _id of the $group: { 
+city: '$city', state: '$state' }
+
+db.zipcodes.aggregate([{$group:{_id:{state:"$state",city:"$city"},total:{$sum:"$pop"}}}]);
+ 
+
+3.	sort the results by population, highest first
+
+db.zipcodes.aggregate([{$group:{_id:{state:"$state",city:"$city"},stotal:{$sum:"$pop"}}},{$sort:{"stotal":-1}}]);
+ 
+
+3. limit the results to just the first 3 results. What are the top 3 cities in 
+population?
+
+db.zipcodes.aggregate([{$group:{_id:{state:"$state",city:"$city"},stotal:{$sum:"$pop"}}},{$sort:{"stotal":-1}},{$limit:3}]);
+ 
+
+4.	What are the top 3 cities in population in Texas?
+
+db.zipcodes.aggregate([{$group:{_id:{state:"TX",city:"$city"},stotal:{$sum:"$pop"}}},{$sort:{"stotal":-1}},{$limit:3}]);
+
+ 
+
+Bonus
+1.	Write a query to get the average city population for each state.
+
+db.zipcodes.aggregate([{$group:{_id:{state:"$state",city:"$city"},rtotal:{$sum:"$pop"}}},{$group:{_id:"$_id.state",avgtotal:{$avg:"$rtotal"}}}]);
+ 
+
+
+2.	What are the top 3 states in terms of average city population
+
+db.zipcodes.aggregate([{$group:{_id:{state:"$state",city:"$city"},rtotal:{$sum:"$pop"}}},{$group:{_id:"$_id.state",avgtotal:{$avg:"$rtotal"}}},{$limit:3}]);
+
+ 
+
+
+
+
+
+
+
+
+
+
+
+
+
+MongoDB – Complex Queries
+Mongo DB Exercises - With the Restaurants Data Set
+
+1. Download the restaurants.zip file
+2. Unzip the file, you will see restaurants.json file
+3. Run the mongod server
+4. Run the following command to import the json file provided. It will load the
+json file into the mongodb with database name - restaurants, collections
+name - addresses
+mongoimport --db restaurants --collection addresses --file restaurants.json
+5. Run mongo shell command
+6. show databases
+7. use restaurants
+8. db.addresses.find() should print entire json data
+
+
+show dbs;
+use restaurants
+db.addresses.find()
+
+ 
+
+
+1. Write a MongoDB query to display all the documents in the collection
+restaurants.
+db.addresses.find();
+
+ 
+
+2. Write a MongoDB query to display the fields restaurant_id, name, borough
+and cuisine for all the documents in the collection restaurant.
+
+db.addresses.find({},{_id:1,name:1,borough:1,restaurant_id:1});
+
+ 
+3. Write a MongoDB query to display the fields restaurant_id, name, borough
+and cuisine, but exclude the field _id for all the documents in the collection
+restaurant.
+db.addresses.find({},{_id:0,name:1,borough:1,restaurant_id:1});
+
+ 
+
+
+4. Write a MongoDB query to display the fields restaurant_id, name, borough
+and zip code, but exclude the field _id for all the documents in the collection
+restaurant.
+
+db.addresses.find({},{_id:0,name:1,borough:1,restaurant_id:1,"address.zipcode":1});
+
+ 
+
+5. Write a MongoDB query to display the first 5 restaurant which is in the
+borough Bronx.
+db.addresses.find({"borough":"Bronx"}).limit(5);
+ 
+
+6. Write a MongoDB query to display all the restaurant which is in the borough
+Bronx.
+db.addresses.find({"borough":"Bronx"}).pretty();
+ 
+
+7. Write a MongoDB query to display the next 5 restaurants after skipping first 5
+which are in the borough Bronx.
+db.addresses.find({"borough":"Bronx"}).skip(5).limit(5)
+
+ 
+
+8. Write a MongoDB query to find the restaurants who achieved a score more
+than 90.
+
+db.addresses.find({"grades.score":{"$gt":90}})
+ 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+9. Write a MongoDB query to find the restaurants that achieved a score, more
+than 80 but less than 100.
+
+db.addresses.find({$and : [{"grades.score":{"$gt":90}},{"grades.score":{"$lt":100}}]})
+
+ 
+
+
+10. Write a MongoDB query to find the restaurants which locate in latitude value
+less than -95.754168.
+db.addresses.find({"address.coord.0":{$lt:-95.754168}})
+
+ 
+
+11. Write a MongoDB query to find the restaurants that do not prepare any
+cuisine of 'American' and their grade score more than 70 and latitude less
+than -65.754168.
+
+db.addresses.find({$and:[{"cuisine":{$ne:"American"}},{"address.coord.0":{$lt:-65.754168}},{"grades.score":{$gt:70}}]})
+ 
+
+12. Write a MongoDB query to find the restaurants which do not prepare any
+cuisine of 'American' and achieved a score more than 70 and located in the
+longitude less than -65.754168.
+db.addresses.find({$and:[{"cuisine":{$ne:"American"}},{"address.coord.1":{$lt:-65.754168}},{"grades.score":{$gt:70}}]})
+
+ 
+As there is no restaurants having longitude less than -65.754168
+
+13. Write a MongoDB query to find the restaurants which do not prepare any
+cuisine of 'American ' and achieved a grade point 'A' not belongs to the
+borough Brooklyn. The document must be displayed according to the cuisine
+in descending order.
+
+db.addresses.find({$and:[{"cuisine":{$ne:"American"}},{"grades.grade":"A"},{"borough":{$ne:"Brooklyn"}}]}).sort({cuisine:-1})
+ 
+
+
+14. Write a MongoDB query to find the restaurant Id, name, borough and cuisine
+for those restaurants which contain 'Wil' as first three letters for its name.
+
+db.addresses.find({"name":{$regex:/^Wil.*/}},{_id:0,restaurant_id:1,name:1,borough:1,cuisine:1})
+ 
+
+15. Write a MongoDB query to find the restaurant Id, name, borough and cuisine
+for those restaurants which contain 'ces' as last three letters for its name.
+
+db.addresses.find({"name":{$regex:/.*cex$/}},{_id:0,restaurant_id:1,name:1,borough:1,cuisine:1})
+ 
+AS there is no restaurant id with having last three words cex
+
+16. Write a MongoDB query to find the restaurant Id, name, borough and cuisine
+for those restaurants which contain 'Reg' as three letters somewhere in its
+name.
+db.addresses.find({"name":{$regex:/Reg/}},{_id:0,restaurant_id:1,name:1,borough:1,cuisine:1})
+ 
+
+17. Write a MongoDB query to find the restaurants which belong to the borough
+Bronx and prepared either American or Chinese dish.
+
+db.addresses.find({borough:"Bronx",cuisine:{$in:["American","Chinese"]}},{_id:0,restaurant_id:1,name:1,borough:1,cuisine:1})
+ 
+
+
+18. Write a MongoDB query to find the restaurant Id, name, borough and cuisine
+for those restaurants which belong to the borough Staten Island or Queens or
+Bronxor Brooklyn.
+
+db.addresses.find({$or:[{"borough":"Staten Island"},{"borough":"Bronxor Brooklyn"},{"borough":"Queens"}]},{_id:0,restaurant_id:1,name:1,borough:1,cuisine:1})
+
+ 
+
+
+19. Write a MongoDB query to find the restaurant Id, name, borough and cuisine
+for those restaurants which are not belonging to the borough Staten Island or
+Queens or Bronxor Brooklyn.
+
+db.addresses.find({borough:{$nin:["Staten Island","Queens","Bronxor Brooklyn"]}},{_id:0,restaurant_id:1,name:1,borough:1,cuisine:1})
+ 
+
+
+
+
+
+
+
+
+20. Write a MongoDB query to find the restaurant Id, name, borough and cuisine
+for those restaurants which achieved a score which is not more than 10.
+
+db.addresses.find({"grades.score":{$lte:10}},{_id:0,restaurant_id:1,name:1,borough:1,cuisine:1})
+ 
+
+21. Write a MongoDB query to find the restaurant Id, name, borough and cuisine
+for those restaurants which prepared dish except 'American' and 'Chinees' or
+restaurant's name begins with letter 'Wil'.
+
+db.addresses.find({$nor: [{cuisine: {$in: ["American ","Chinese"]}},{name: /^Wil.*/}]},{_id:0, restaurant_id:1, name:1, borough:1, cuisine:1})
+ 
+
+22. Write a MongoDB query to find the restaurant Id, name, and grades for those
+restaurants which achieved a grade of "A" and scored 11 on an ISODate
+"2014-08-11T00:00:00Z" among many of survey dates..
+
+db.addresses.find({"grades" : {$elemMatch: {"date": ISODate("2014-08-11T00:00:00Z"), "grade":"A", "score":11}}}, {_id:0, restaurant_id:1, name:1, grades:1})
+ 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+23. Write a MongoDB query to find the restaurant Id, name and grades for those
+restaurants where the 2nd element of grades array contains a grade of "A"
+and score 9 on an ISODate "2014-08-11T00:00:00Z"
+
+db.addresses.find({$and: [{"grades.1.grade":"A"}, {"grades.1.score": 9}, {"grades.1.date": ISODate("2014-08-11T00:00:00Z")}]},{_id:0, restaurant_id:1, name:1, grades:1}).pretty()
+ 
+
+
+24. Write a MongoDB query to find the restaurant Id, name, address and
+geographical location for those restaurants where 2nd element of coord array
+contains a value which is more than 42 and upto 52..
+
+db.addresses.find({$and : [{"address.coord.1": {$gt : 42}},{"address.coord.1": {$lte : 52}}]}, {_id:0, restaurant_id:1, name:1, address:1})
+ 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+25. Write a MongoDB query to arrange the name of the restaurants in ascending
+order along with all the columns.
+
+db.addresses.find({},{_id:0, name:1}).sort( {name: 1})
+ 
+
+
+26. Write a MongoDB query to arrange the name of the restaurants in descending
+along with all the columns.
+db.addresses.find({},{_id:0, name:1}).sort( {name: -1})
+ 
+
+
+
+
+
+
+
+
+
+
+27. Write a MongoDB query to arranged the name of the cuisine in ascending
+order and for that same cuisine borough should be in descending order.
+
+db.addresses.find({}, {_id:0, cuisine:1, borough:1}).sort({cuisine: 1, borough: -1})
+ 
+
+
+28. Write a MongoDB query to know whether all the addresses contains the street
+or not.
+db.addresses.find({"address.street": {$regex: /Street/}}).pretty()
+db.addresses.find({"address.street": {$ne: {$regex: /Street/}}}).pretty()
+
+ 
+
+ 
+
+29. Write a MongoDB query which will select all documents in the restaurants
+collection where the coord field value is Double.
+
+db.addresses.find({"address.coord": {$type: "double"}}, {_id:0, address:1})
+ 
+
+30. Write a MongoDB query which will select the restaurant Id, name and grades
+for those restaurants which returns 0 as a remainder after dividing the score
+by 7.
+db.addresses.find({"grades": {$elemMatch: {"score": {$mod: [7,0]}}}},{_id:0, restaurant_id:1, name:1, grades:1})
+ 
+
+31. Write a MongoDB query to find the restaurant name, borough, longitude and
+attitude and cuisine for those restaurants which contains 'mon' as three letters
+somewhere in its name.
+db.addresses.find({name: {$regex: /mon/}},{_id:0, name:1, borough:1, "address.coord":1, cuisine:1})
+ 
+
+32. Write a MongoDB query to find the restaurant name, borough, longitude and
+latitude and cuisine for those restaurants which contain 'Mad' as first three
+letters of its name. 
+db.addresses.find({name: {$regex: /^Mad.*/}},{_id:0, name:1, borough:1, "address.coord":1, cuisine:1})
+ 
+
+
+
+
+
+
+
+
+
+
