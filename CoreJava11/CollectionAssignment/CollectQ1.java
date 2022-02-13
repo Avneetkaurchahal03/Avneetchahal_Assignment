@@ -38,7 +38,7 @@ public class CollectQ1 {
 
 		}while(choice != 2);	
 
-		System.out.print("Successfully run");
+		System.out.print("Program Executed successfully");
 	}
 
 }
