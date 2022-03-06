@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:context="http://www.springframework.org/schema/context"
+	xmlns:p="http://www.springframework.org/schema/p"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans
+    http://www.springframework.org/schema/beans/spring-beans.xsd
+    http://www.springframework.org/schema/context
+    http://www.springframework.org/schema/context/spring-context.xsd">    
+    
+        <bean id="ansList" class="com.avneet.list" name ="ansList">
+        	<property name="questionId" value="23"></property>
+        	<property name="question" value="How are you?"></property>
+        	<property name="answers">
+	        	<list>
+	     			 <value>=good!</value>
+	     			 <value>pretty good!</value>
+	     			 <value>fine!</value>
+	        	</list>
+        	</property>
+        </bean>
+        
+        <bean id="ansSet" class="com.avneet.set" name ="anSet">
+        	<property name="questionId" value="24"></property>
+        	<property name="question" value="A person living permanently in a certain place:"></property>
+        	<property name="answers">
+	        	<set>
+	     			 <value>Native</value>
+	     			 <value>Resident</value>
+	     			 <value>Domicile</value>
+	        	</set>
+        	</property>
+        </bean>
+        
+        <bean id="ansMap" class="com.avneet.map" name ="ansMap">
+        	<property name="questionId" value="25"></property>
+        	<property name="question" value="What type of dress you want?"></property>
+        	<property name="answers">
+	        	<map>
+	     			<entry key = "0" value = "Western"/>
+		            <entry key = "1" value = "peplum"/>
+		            <entry key = "2" value = "sweater"/>
+		            <entry key = "3" value = "traditional"/>
+	        	</map>
+        	</property>
+        </bean>
+</beans>

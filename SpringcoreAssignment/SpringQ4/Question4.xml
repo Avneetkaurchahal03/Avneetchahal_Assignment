@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xmlns:context="http://www.springframework.org/schema/context"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans
+        https://www.springframework.org/schema/beans/spring-beans.xsd
+        http://www.springframework.org/schema/context
+        https://www.springframework.org/schema/context/spring-context.xsd">
+
+	<bean id="account1" class="com.avneet.BankAccount">
+		<constructor-arg type="long" value="2000" />
+		<constructor-arg value="Dhoni" />
+		<constructor-arg value="Current" />
+		<constructor-arg type="double" value="10000" />
+	</bean>
+
+	<bean id="account2" class="com.avneet.BankAccount">
+		<constructor-arg type="long" value="2200" />
+		<constructor-arg value="Rana" />
+		<constructor-arg value="Savings" />
+		<constructor-arg type="double" value="20000" />
+	</bean>
+	<context:annotation-config />
+	<context:component-scan
+		base-package="com.avneet" />
+	<context:annotation-config />
+
+</beans>
