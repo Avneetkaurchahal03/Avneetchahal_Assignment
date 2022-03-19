@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>Variable containing Object</title>
+    </head>
+    <body>
+        <script>
+            let name = {firstName: "Avneet", lastName: "Chahal"};
+            document.write("Firstname: "+name.firstName);
+            document.write("<br>Lastname: "+name.lastName);
+
+            document.write("Firstname: "+name.firstName);
+            name.lastName = "Dhami";
+            document.write("<br><hr>Updated Lastname: "+name.lastName);
+
+            document.write("Firstname: "+name.firstName);
+            name.lastName = "Brar";
+            document.write("<br><hr>Updated Lastname: "+name.lastName);
+        </script>
+    </body>
+</html>

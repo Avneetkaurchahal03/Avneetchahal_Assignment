@@ -1,0 +1,20 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        Fibonacci Series
+        <br>
+    </head>
+    <body>
+        <script>
+                let n = prompt("Enter number :");
+                function fib(n) {
+                if (n <= 1)
+                    return n;
+                return fib(n-1) + fib(n-2);
+            }
+              
+                document.write(fib(n));
+            </script>
+    </body>
+
+</html>

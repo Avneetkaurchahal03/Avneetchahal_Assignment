@@ -1,0 +1,18 @@
+body{
+    background-color: #d0ebf5;
+}
+.Element{
+    background-color: #d0ebf5;
+}
+.Element1{
+    margin-bottom: 0px;
+    background-color: #6384cd;
+    font-family: Arial, Helvetica, sans-serif;
+}
+.Element2,.Element4{
+    background-color: #7baccf;
+    font-family: Arial, Helvetica, sans-serif;
+}
+.Element2{
+    padding-top: 1px;
+}
