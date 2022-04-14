@@ -1,0 +1,181 @@
+import React, {useState, Fragment} from 'react';
+import logo from './logo.svg';
+import "./App.css";
+import data from "./mock-data.json"
+import { nanoid } from 'nanoid'
+
+import Greet from './components/Greet';
+import Welcome from './components/Welcome';
+import Hello from './components/Hello';
+import Message from './components/Message';
+import Counter from './components/Counter';
+import HelloWorld from './components/HelloWorld';
+import ReadOnlyRow from './ReadOnlyRow';
+import EditableRow from './EditableRow';
+
+
+
+  const App = () => {
+    const [contacts, setContacts] = useState(data);
+    const [addFormData, setAddFormData] = useState({
+      name: "",
+      job: "",
+    });  
+
+    const [editFormData, setEditFormData] = useState({
+      name: "",
+      job: "",
+
+    })
+    const [editContactId, setEditContactId]= useState(null);
+
+    const handleAddFormChange = (event) => {
+      event.preventDefault();
+
+      const fieldName = event.target.getAttribute('name');
+      const fieldValue = event.target.value;
+      
+      const newFormData = { ...addFormData};
+      newFormData[fieldName] = fieldValue;
+
+      setAddFormData(newFormData);
+    };
+
+    const handleEditFormChange = (event) => {
+      event.preventDefault();
+
+      const fieldName=event.target.getAttribute("name");
+      const fieldValue=event.target.value;
+
+      const newFormData = { ...editFormData};
+      newFormData[fieldName] = fieldValue;
+
+      setEditFormData(newFormData);
+
+
+
+    }
+
+    const handleAddFormSubmit = (event) => {
+      event.preventDefault();
+
+      const newContact = {
+        id:nanoid(),
+        name:addFormData.name,
+        job: addFormData.job,
+      };
+
+      const newContacts=[...contacts, newContact];
+      setContacts(newContacts);
+
+    };
+
+    const handleEditClick = (event, contact) => {
+      event.preventDefault();
+      setEditContactId(contact.id);
+
+      const formValues = {
+        name:contact.name,
+        job:contact.job,
+      }
+
+      setEditFormData(formValues);
+    }
+
+    const handleCancelClick = () => {
+      setEditContactId(null);
+
+    };
+
+    const handleDeleteClick = (contactId) => {
+      const newContacts = [...contacts];
+
+      const index = contacts.findIndex((contact)=> contact.id === contactId)
+    }
+      return (
+        <div className="app-container">
+          <form>
+            <table>
+                <thead>
+                    <tr>
+                        <th>Name</th>
+                        <th>Job</th>
+                        <th>Actions</th>
+                    </tr>
+                </thead>
+                <tbody>
+                  {contacts.map((contact) =>(
+                    <Fragment>
+                       {editContactId === contact.id ?( 
+                          <EditableRow
+                           editFormData={editFormData}
+                           handleEditFormChange={handleEditFormChange}
+                           /> 
+                        ) : (
+                           <ReadOnlyRow 
+                           contact={contact}
+                           handleEditClick={handleEditClick}
+                          />
+                        )}
+                    </Fragment>
+                    
+                  ))}
+                </tbody>
+            </table>
+            </form>
+
+            <h2>Add New Employee</h2>
+            <form onSubmit={handleAddFormSubmit}>
+              <h2>NAME:</h2>
+              <input
+              type="text"
+              name="name"
+              required="required"
+              placeholder="Enter a name"
+              onChange={handleAddFormChange}
+              />
+              <br />
+              <h2>JOB:</h2>
+              <input
+              type="text"
+              name="job"
+              required="required"
+              placeholder="Enter a job"
+              onChange={handleAddFormChange}
+              />
+              <br />
+              <br />
+              <button type="submit">Add</button>
+            </form>
+        </div>
+
+    );
+};
+/*class App extends Component{
+  render()  {
+    return (
+     <div className = "App">
+       <HelloWorld></HelloWorld>
+      {/*<Greet name = "Avni" heroname="Batman">
+        <p>This is children props</p>
+      </Greet>
+      <Greet name = "Seert"heroname="Wonderwoman">
+        <button>Action</button>
+      </Greet>
+      <Greet name = "Noor" heroname="Batman"></Greet>
+      <Greet name = "Raj" heroname="superman"></Greet>
+
+      <Welcome name = "Avni" heroname="Batman"></Welcome>
+      <Welcome name = "Seert" heroname="Wonderwoman"></Welcome>
+      <Welcome name = "Noor" heroname="Batman"></Welcome>
+       <Welcome name = "Raj" heroname="Auperman"></Welcome>
+        {/*<Hello></Hello>
+    <Message></Message>
+    <Counter></Counter>
+      
+      </div>
+    );
+  }
+}*/
+
+export default App;

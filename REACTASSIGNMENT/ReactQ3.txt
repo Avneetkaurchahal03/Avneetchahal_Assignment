@@ -1,0 +1,126 @@
+IN App.js
+
+import React, {useState} from 'react';
+import logo from './logo.svg';
+import "./App.css";
+import data from "./mock-data.json"
+import { nanoid } from 'nanoid'
+
+import Greet from './components/Greet';
+import Welcome from './components/Welcome';
+import Hello from './components/Hello';
+import Message from './components/Message';
+import Counter from './components/Counter';
+import HelloWorld from './components/HelloWorld';
+
+
+
+  const App = () => {
+    const [contacts, setContacts] = useState(data);
+    const [addFormData, setAddFormData] = useState({
+      name: "",
+      job: "",
+    });  
+
+    const handleAddFormChange = (event) => {
+      event.preventDefault();
+
+      const fieldName = event.target.getAttribute('name');
+      const fieldValue = event.target.value;
+      
+      const newFormData = { ...addFormData};
+      newFormData[fieldName] = fieldValue;
+
+      setAddFormData(newFormData);
+    };
+
+    const handleAddFormSubmit = (event) => {
+      event.preventDefault();
+
+      const newContact = {
+        id:nanoid(),
+        name:addFormData.name,
+        job: addFormData.job,
+      };
+
+      const newContacts=[...contacts, newContact];
+      setContacts(newContacts);
+
+    };
+      return (
+        <div className="app-container">
+            <table>
+                <thead>
+                    <tr>
+                        <th>Name</th>
+                        <th>Job</th>
+                    </tr>
+                </thead>
+                <tbody>
+                  {contacts.map((contact) =>(
+                     <tr>
+                     <td>{contact.name}</td>
+                     <td>{contact.job}</td>
+                 </tr>
+                  ))}
+                </tbody>
+            </table>
+
+            <h2>Add New Employee</h2>
+            <form onSubmit={handleAddFormSubmit}>
+              <h2>NAME:</h2>
+              <input
+              type="text"
+              name="name"
+              required="required"
+              placeholder="Enter a name"
+              onChange={handleAddFormChange}
+              />
+              <br />
+              <h2>JOB:</h2>
+              <input
+              type="text"
+              name="job"
+              required="required"
+              placeholder="Enter a job"
+              onChange={handleAddFormChange}
+              />
+              <br />
+              <br />
+              <button type="submit">Add</button>
+            </form>
+        </div>
+
+    );
+};
+/*class App extends Component{
+  render()  {
+    return (
+     <div className = "App">
+       <HelloWorld></HelloWorld>
+      {/*<Greet name = "Avni" heroname="Batman">
+        <p>This is children props</p>
+      </Greet>
+      <Greet name = "Seert"heroname="Wonderwoman">
+        <button>Action</button>
+      </Greet>
+      <Greet name = "Noor" heroname="Batman"></Greet>
+      <Greet name = "Raj" heroname="superman"></Greet>
+
+      <Welcome name = "Avni" heroname="Batman"></Welcome>
+      <Welcome name = "Seert" heroname="Wonderwoman"></Welcome>
+      <Welcome name = "Noor" heroname="Batman"></Welcome>
+       <Welcome name = "Raj" heroname="Auperman"></Welcome>
+        {/*<Hello></Hello>
+    <Message></Message>
+    <Counter></Counter>
+      
+      </div>
+    );
+  }
+}*/
+
+export default App;
+
+
+--------------------------------------------------------

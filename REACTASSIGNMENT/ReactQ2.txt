@@ -1,0 +1,189 @@
+in app.js
+
+import React, {useState} from 'react';
+import logo from './logo.svg';
+import "./App.css";
+import data from "./mock-data.json"
+
+import Greet from './components/Greet';
+import Welcome from './components/Welcome';
+import Hello from './components/Hello';
+import Message from './components/Message';
+import Counter from './components/Counter';
+import HelloWorld from './components/HelloWorld';
+
+
+
+  const App = () => {
+
+    const [contacts,setContacts] = useState(data);
+    return (
+        <div className="app-container">
+            <table>
+                <thead>
+                    <tr>
+                        <th>Name</th>
+                        <th>Job</th>
+                    </tr>
+                </thead>
+                <tbody>
+                  {contacts.map((contact) =>(
+                     <tr>
+                     <td>{contact.name}</td>
+                     <td>{contact.job}</td>
+                 </tr>
+                  ))}
+                </tbody>
+            </table>
+        </div>
+
+    );
+};
+/*class App extends Component{
+  render()  {
+    return (
+     <div className = "App">
+       <HelloWorld></HelloWorld>
+      {/*<Greet name = "Avni" heroname="Batman">
+        <p>This is children props</p>
+      </Greet>
+      <Greet name = "Seert"heroname="Wonderwoman">
+        <button>Action</button>
+      </Greet>
+      <Greet name = "Noor" heroname="Batman"></Greet>
+      <Greet name = "Raj" heroname="superman"></Greet>
+
+      <Welcome name = "Avni" heroname="Batman"></Welcome>
+      <Welcome name = "Seert" heroname="Wonderwoman"></Welcome>
+      <Welcome name = "Noor" heroname="Batman"></Welcome>
+       <Welcome name = "Raj" heroname="Auperman"></Welcome>
+        {/*<Hello></Hello>
+    <Message></Message>
+    <Counter></Counter>
+      
+      </div>
+    );
+  }
+}*/
+
+export default App;
+
+--------------------------------------------------------------------
+
+app.css
+
+
+.App {
+  text-align: center;
+}
+
+.app-container {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  padding : 1rem;
+
+}
+
+table {
+  border-collapse: collapse;
+  width: 100%;
+
+}
+  
+th {
+  border-bottom: 1px solid black;
+}
+  
+th,
+td{
+  border : 1px solid #ffffff;
+  text-align: left;
+  padding : 8px;
+  font-size : 32px;
+}
+
+th{
+  background-color: white;
+}
+
+td{
+  background-color:lightblue;
+}*/
+
+form {
+  display:flex;
+  gap:5px;
+}
+form td :last-child{
+  display:flex;
+  justify-content :space-evenly;
+}
+
+form *{
+  font-size:28px;
+}
+
+.App-logo {
+  height: 40vmin;
+  pointer-events: none;
+}
+
+@media (prefers-reduced-motion: no-preference) {
+  .App-logo {
+    animation: App-logo-spin infinite 20s linear;
+  }
+}
+
+.App-header {
+  background-color: #282c34;
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  font-size: calc(10px + 2vmin);
+  color: white;
+}
+
+.App-link {
+  color: #61dafb;
+}
+
+@keyframes App-logo-spin {
+  from {
+    transform: rotate(0deg);
+  }
+  to {
+    transform: rotate(360deg);
+  }
+}
+ 
+
+
+-------------------------------------------------------------------------
+mock-data.json
+
+
+[
+    {
+        "id":1,
+        "name":"Charlie",
+        "job":"janitor"
+    },
+    {
+        "id":2,
+        "name":"Mac",
+        "job":"Bouncer"
+    },
+    {
+        "id":3,
+        "name":"Dee",
+        "job":"Aspiring Actress"
+    },
+    {
+        "id":4,
+        "name":"Dennis",
+        "job":"Bartender"
+    }
+]

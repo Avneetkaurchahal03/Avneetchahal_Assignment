@@ -1,0 +1,232 @@
+import React,{useState, useEffect} from 'react';
+import './App.css';
+
+function App() {
+  const [currentSum,setCurrentSum]=useState(0);
+  const [clear,setClear]=useState(false);
+
+  useEffect(()=>{
+    document.querySelector('#result').value="";
+  },[])
+  
+  useEffect(()=>{
+    if(clear)
+    document.querySelector('#result').value="";
+  })
+
+  const Add=(e)=>{
+    e.preventDefault();
+    if(clear) setClear(false);
+    let currentNum=document.querySelector('#num').value
+    if(currentNum=='')
+    return;
+    let sum= currentSum+parseInt(currentNum);
+    setCurrentSum(sum);
+    document.querySelector('#num').value="";
+      
+  }
+
+  const Clear=(e)=>{
+    e.preventDefault();
+    console.log('sum:', currentSum);
+    document.querySelector('form').reset();
+    setClear(true);
+    setCurrentSum(0);
+  }
+
+  return (
+    <div className="App">
+      <div className="app-title">
+        <h1> Basic Form Calculator</h1>
+      </div>
+      <form>
+            <input type="text" id="result" value={currentSum}  readOnly />   
+            <input type="text" id="num" placeholder="enter a number" />
+            <button onClick={Add}>Add</button>
+            <button onClick={Clear}>Clear</button>
+      </form>
+    </div>
+  );
+}
+
+export default App;
+
+
+--------------------------------------------------------------
+
+choose second
+
+
+-------------------------------------------------------------
+ Wrapper.js
+import "./Wrapper.css";
+
+const Wrapper = ({ children }) => {
+  return <div className="wrapper">{children}</div>;
+};
+
+export default Wrapper;
+
+
+-------------------------------------------------------------
+wrapper.css
+
+.wrapper {
+  width: 340px;
+  height: 540px;
+  padding: 10px;
+  border-radius: 10px;
+  background-color: #485461;
+  background-image: linear-gradient(315deg, #485461 0%, #28313b 74%);
+}
+
+---------------------------------------------------------
+
+Screen.js
+npm i react-textfit 
+import { Textfit } from "react-textfit";
+import "./Screen.css";
+
+const Screen = ({ value }) => {
+  return (
+    <Textfit className="screen" mode="single" max={70}>
+      {value}
+    </Textfit>
+  );
+};
+
+export default Screen;
+
+-----------------------------------------------------
+Screen.css
+.screen {
+  height: 100px;
+  width: 100%;
+  margin-bottom: 10px;
+  padding: 0 10px;
+  background-color: #4357692d;
+  border-radius: 10px;
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+  color: white;
+  font-weight: bold;
+  box-sizing: border-box;
+}
+
+
+-------------------------------------------------------
+
+Button.js
+import "./Button.css";
+
+const Button = ({ className, value, onClick }) => {
+  return (
+    <button className={className} onClick={onClick}>
+      {value}
+    </button>
+  );
+};
+
+export default Button;
+
+------------------------------------------------------
+Button.css
+button {
+  border: none;
+  background-color: rgb(80, 60, 209);
+  font-size: 24px;
+  color: rgb(255, 255, 255);
+  font-weight: bold;
+  cursor: pointer;
+  border-radius: 10px;
+  outline: none;
+}
+
+button:hover {
+  background-color: rgb(61, 43, 184);
+}
+
+.equals {
+  grid-column: 3 / 5;
+  background-color: rgb(243, 61, 29);
+}
+
+.equals:hover {
+  background-color: rgb(228, 39, 15);
+}
+
+-----------------------------------------------------
+Render elements
+The base file for rendering in React apps is index.js. Before we go further, make sure your index.js looks as follows:
+
+import React from "react";
+import ReactDOM from "react-dom";
+
+import App from "./App";
+import "./index.css";
+
+ReactDOM.render(
+  <React.StrictMode>
+    <App />
+  </React.StrictMode>,
+  document.getElementById("root")
+);
+
+------------------------------------------------
+@import url("https://fonts.googleapis.com/css2?family=Montserrat&display=swap");
+
+* {
+  margin: 0;
+  padding: 0;
+  font-family: "Montserrat", sans-serif;
+}
+
+body {
+  height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background-color: #fbb034;
+  background-image: linear-gradient(315deg, #fbb034 0%, #ffdd00 74%);
+}
+
+-----------------------------------------------------
+App.js
+
+import Wrapper from "./components/Wrapper";
+import Screen from "./components/Screen";
+import ButtonBox from "./components/ButtonBox";
+import Button from "./components/Button";
+
+const btnValues = [
+  ["C", "+-", "%", "/"],
+  [7, 8, 9, "X"],
+  [4, 5, 6, "-"],
+  [1, 2, 3, "+"],
+  [0, ".", "="],
+];
+
+const App = () => {
+  return (
+    <Wrapper>
+      <Screen value=0 />
+      <ButtonBox>
+        {
+          btnValues.flat().map((btn, i) => {
+            return (
+              <Button
+                key={i}
+                className={btn === "=" ? "equals" : ""}
+                value={btn}
+                onClick={() => {
+                  console.log(`${btn} clicked!`);
+                }}
+              />
+            );
+          })
+        }
+      </ButtonBox>
+    </Wrapper>
+  );
+};
